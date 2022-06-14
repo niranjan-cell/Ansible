@@ -1,0 +1,11 @@
+--- 
+
+- hosts: appserver
+  vars: 
+    name: ansible
+  tasks: 
+    - name: Replace string
+      replace:
+         path: /home/ec2-user/configuration.txt
+         regexp: 'AWS'
+         replace: '{{ name }}'

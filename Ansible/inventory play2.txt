@@ -1,0 +1,21 @@
+  1  mkdir ansible-play
+    2  cd  ansible-play/
+    3  vim key.pem
+    4  vim inventory.txt
+    5  ansible-inventory -i inventory --list
+    6  ansible-inventory -i inventory.txt --list
+    7  vim inventory.txt
+    8  ansible-inventory -i inventory.txt --list
+    9  ansible ubuntu -m ping -i inventory.txt
+   10  chmod 600 key.pem
+   11  ansible ubuntu -m ping -i inventory.txt
+   12  ansible amazon -m ping -i inventory.txt
+   13  ansible-inventory -i inventory.txt --list
+   14  cd /etc/ansible/
+   15  clear
+   16  ls
+   17  vim ansible.cfg
+   18  ansible-inventory -i inventory.txt --list
+   19  cd /root/ansible-play/
+   20  ansible-inventory -i inventory.txt --list
+   21  ansible amazon -m ping -i inventory.txt

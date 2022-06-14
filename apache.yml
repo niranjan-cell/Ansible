@@ -1,0 +1,22 @@
+--- 
+
+- hosts: webserver
+  become: yes
+  tasks:
+    - name: Install Apache HTTPD
+      yum:
+        name: httpd
+        state: present
+      tags:
+      - install
+
+    - name: Start Apache Service
+      service: 
+        name: httpd
+        state: started
+      tags:
+      - start_apache
+    - name: Add Html page
+      copy:
+        src: /home/ec2-user/ansible/html-files/devops.html
+        dest: /var/www/html/

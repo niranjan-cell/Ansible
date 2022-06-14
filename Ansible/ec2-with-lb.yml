@@ -1,0 +1,53 @@
+- name: Create Multiple EC2 instances with a Load Balancer
+  hosts: localhost
+  gather_facts: false
+  vars:
+    name: server-frm-ansible
+    ami: ami-07ebfd5b3428b6f4d
+    key: Naman-30-march-2020-NV
+    SG: NamanWebSG
+    region: us-east-1
+    subnetA: subnet-397fa774
+    subnetB: subnet-c4adb898
+
+  tasks:
+    - name: Launch Instance in Zone A
+      ec2:
+        key_name: "{{ key }}"
+        group: "{{ SG }}"
+        instance_type: t2.micro
+        image: "{{ ami }}"
+        user_data: "{{ lookup('file', 'user_data_serverA.sh') }}"
+        region: "{{ region }}"
+        vpc_subnet_id: "{{ subnetA }}"
+        assign_public_ip: yes
+        exact_count: 1
+        count_tag:
+          Name: "{{ name }}"
+        instance_tags:
+          Name: ServerA
+      register: ServerA
+    - name: Creating a Load Balancer
+      ec2_elb_lb:
+        name: "LB"
+        state: present
+        region: "{{ region }}"
+        subnets:
+         - "{{ subnetA }}"
+         - "{{ subnetB }}"
+        security_group_names: "{{ SG }}"
+        listeners:
+         - protocol: http # options are http, https, ssl, tcp
+           load_balancer_port: 80
+           instance_port: 80
+           proxy_protocol: True
+        health_check:
+          ping_protocol: http # options are http, https, ssl, tcp
+          ping_port: 80
+          ping_path: "/index.html" # not required for tcp or ssl
+          response_timeout: 5 # seconds
+          interval: 10 # seconds
+          unhealthy_threshold: 2
+          healthy_threshold: 2
+        instance_ids: "{{ ServerA.instance_ids }}"
+      register: elastic_lb

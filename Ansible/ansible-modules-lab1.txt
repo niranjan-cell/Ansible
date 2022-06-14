@@ -1,0 +1,13 @@
+1  cd ansible-play/
+    2  clear
+    3  ansible amazon -m setup -u ec2-user
+    4  ls -al
+    5  ansible amazon -m setup -i inventory.txt -u ec2-user
+    6  vim index.txt
+    7  ansible amazon -m copy -a 'src=/root/ansible-play/index.txt dest=/tmp' -i inventory.txt -u ec2-user
+    8  clear
+    9  ansible ubuntu -m shell -a 'ls -la' -i inventory.txt -u ec2-user
+   10  ansible amazon -m yum -a 'name=httpd state=present' -become -i inventory.txt
+   11  ansible amazon -m service -a 'name=httpd state=started' -become -i inventory.txt
+   12  ansible amazon -m service -a 'name=httpd state=stopped' -become -i inventory.txt
+   13  history

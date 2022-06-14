@@ -1,0 +1,29 @@
+ vim key.pem
+    2  chmod 600 key.pem
+   30  ssh ubuntu@172.31.16.233 -i key.pem
+   31  clear
+   32  mkdir ansible
+   33  cd ansible/
+   34  vim inventory.txt
+
+ubuntu ansible_host=172.31.16.233 ansible_ssh_private_key_file=/root/key.pem ansible_user=ubuntu
+red ansible_host=172.31.16.125 ansible_ssh_private_key_file=/root/key.pem ansible_user=ec2-user
+amazon ansible_host=172.31.31.224 ansible_ssh_private_key_file=/root/key.pem ansible_user=ec2-user
+
+
+
+   35  ansible ubuntu -m ping -i inventory.txt
+   36  vim inventory.txt
+   37  ansible ubuntu -m ping -i inventory.txt
+   38  vim inventory.txt
+   39  ansible ubuntu -m ping -i inventory.txt
+   40  vim inventory.txt
+   41  ansible red -m ping -i inventory.txt
+   42  ansible amazon -m ping -i inventory.txt
+
+
+
+
+apt install apache2 -y
+cp /etc/apache2/apache2.conf /etc/ansible/roles/apache/files/
+

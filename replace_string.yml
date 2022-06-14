@@ -1,0 +1,9 @@
+--- 
+
+- hosts: appserver
+  tasks: 
+    - name: Replace string
+      replace:
+         path: /home/ec2-user/configuration.txt
+         regexp: 'devops'
+         replace: 'AWS'

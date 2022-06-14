@@ -1,0 +1,75 @@
+3 servers - 
+
+
+Ansible Host - 1
+private ip: 172.31.37.16
+
+Remote Node servers - 2
+webserver: 172.31.39.137
+appserver: 172.31.34.205
+ 
+
+
+ansible: used for ad-hoc commands
+ansible-playbook: used for executing playbooks
+ansible-doc: used for searching or retriving the information of modules
+ansible-galaxy: used for ansible roles
+
+
+Asymmetric auth - 
+	2 keys : public key, private key
+
+devops-session-demo.pem - public key is already present on all the 3 servers
+
+AD-HOC commands use-cases: 
+1. create a user - support 
+2. Create a txt file on remote host
+3. Install Apache(httpd) on webserver
+4. Start/stop the Apache(httpd) on webserver
+5. Copy the files from ansible host to remote host
+6. Delete the file from remote host
+
+
+
+ansible host-group -m name -a arguments
+ansible -m name -a arguments  host-group
+
+
+Yaml: 
+	It starts with ---
+
+
+- fruits
+- birds
+- tree
+
+key:value
+name:ritesh
+
+
+- mango
+    season: summer
+    type: sweet
+    color: yellow
+
+
+key: 
+  key: value
+  key: value
+  key: 
+  - list: value
+    key: value
+
+- list 
+   - list
+   - list
+
+
+- devops:
+    name: Ritesh Goyal
+    job: Architect
+    skills: 
+      - AWS
+      - GCP
+      - DevOps stack
+  

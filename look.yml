@@ -1,0 +1,56 @@
+--- 
+
+- hosts: webserver
+  become: yes
+  tasks:
+    - name: configuring the apache2
+      shell: |
+        apt update
+    - name: Install Apache HTTPD
+      apt:
+        name: 
+        - apache2
+        - php
+        - libapache2-mod-php
+        - php-mysql
+        - php-curl
+        - php-gd
+        - php-mbstring
+        - php-xml
+        - php-xmlrpc
+        - unzip
+        state: present
+      tags:
+      - install
+
+    - name: configuring the apache2
+      shell: |
+        cd /var/www/html/
+        rm -f index.html
+        a2enmod rewrite
+        cd html
+        wget https://wordpress.org/latest.zip
+        unzip latest.zip
+        mv wordpress/* /var/www/html/
+        chown -R www-data:www-data /var/www/html
+        find /var/www/html -type d -exec chmod g+s {} \;
+        chmod g+w /var/www/html/wp-content
+        chmod -R g+w /var/www/html/wp-content/themes
+        chmod -R g+w /var/www/html/wp-content/plugins
+        cd /etc/apache2/sites-available/
+        cp 000-default.conf domain.com.conf
+
+    - name: copying file
+      copy:
+        src: /etc/apache2/sites-available/domain.com.conf
+        dest: work/domain.com.conf
+
+    - name: configuring the apache2
+      shell: |
+        a2ensite domain.com.conf
+        a2dissite 000-default.conf
+
+    - name: Restart apache
+      service:
+        name: apache2
+        state: restarted

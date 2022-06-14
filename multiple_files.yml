@@ -1,0 +1,12 @@
+--- 
+
+- hosts: appserver
+  become: true
+  tasks: 
+    - name: Create directory
+      file: path={{item}} state=directory mode=775 owner=ec2-user group=ec2-user
+      with_items:
+      - '/usr/local/epam'
+      - '/usr/local/devops'
+      - '/usr/local/training'
+      - '/usr/local/Project'

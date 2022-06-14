@@ -1,0 +1,22 @@
+ vim paybook-pingtest.yaml
+-
+  name: Test connectivity to target servers
+  hosts: all
+  tasks:
+    - name: Ping test
+      ping:
+
+
+
+ansible-playbook paybook-pingtest.yaml -i inventory.txt
+
+
+ ansible-playbook apache-play.yaml -i inventory.txt
+
+-
+  name: apache on ubuntu
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: Install latest version of Apache
+      apt: name=apache2 update_cache=yes state=latest

@@ -1,0 +1,7 @@
+-
+  name: apache2 on ubuntu
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: Install latest version of Apache
+      apt: name=apache2 update_cache=yes state=latest

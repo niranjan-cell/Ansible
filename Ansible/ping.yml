@@ -1,0 +1,6 @@
+---
+
+- hosts: all
+  tasks: 
+    - name: Check the Ping
+      ping:
